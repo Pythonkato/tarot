@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>前世タロット占い</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Zen+Antique&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="background-glow"></div>
+    <header class="hero">
+      <p class="tagline">Past Life Tarot</p>
+      <h1>前世タロット占い</h1>
+      <p class="subtitle">
+        星と月がささやく前世の記憶。<br />
+        5枚のカードが、あなたの物語と今世の開運アクションを映し出します。
+      </p>
+    </header>
+
+    <main class="container">
+      <section class="controls">
+        <div class="control-card">
+          <label class="field">
+            <span>お名前（任意）</span>
+            <input type="text" placeholder="ニックネーム" data-name />
+          </label>
+          <div class="toggle-row">
+            <label class="toggle">
+              <input type="checkbox" data-rev-toggle />
+              <span>逆位置あり</span>
+            </label>
+            <label class="toggle">
+              <input type="checkbox" checked data-history-toggle />
+              <span>履歴保存</span>
+            </label>
+          </div>
+          <button type="button" class="primary-button" data-shuffle>
+            シャッフルして占う
+          </button>
+        </div>
+
+        <div class="share-card">
+          <div>
+            <h2>結果URL</h2>
+            <p class="muted">同じURLでいつでも再現できます。</p>
+          </div>
+          <div class="url-row">
+            <input type="text" readonly data-url-output />
+            <button type="button" class="ghost-button" data-copy-url>結果URLをコピー</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="shuffle-status" data-shuffle-status>
+        <div class="spinner"></div>
+        <p>シャッフル中…</p>
+      </section>
+
+      <section class="spread" data-spread></section>
+
+      <section class="story" data-story>
+        <h2>総合ストーリー</h2>
+        <p data-story-text></p>
+        <div class="disclaimer">
+          <p>※占いは娯楽として楽しんでね。</p>
+          <p>医療・法律・投資などの判断は、現実の情報も大切に。</p>
+          <p>怖い方向ではなく、前向きな気づきを得るための物語として受け取ってください。</p>
+        </div>
+      </section>
+
+      <section class="history">
+        <div class="history-head">
+          <h2>履歴（直近10件）</h2>
+          <p class="muted">保存をOFFにすると履歴はクリアされます。</p>
+        </div>
+        <div class="history-list" data-history-list></div>
+      </section>
+
+      <section class="guide">
+        <h2>GitHub Pages 公開手順</h2>
+        <ol>
+          <li>このリポジトリを GitHub に push します。</li>
+          <li>GitHub の Settings → Pages を開きます。</li>
+          <li>Branch を <strong>main</strong>（または現在のブランチ）に設定して Save。</li>
+          <li>数十秒後に表示される URL で公開完了です。</li>
+        </ol>
+      </section>
+    </main>
+
+    <footer class="footer">© Past Life Tarot</footer>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
