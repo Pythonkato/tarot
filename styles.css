@@ -228,6 +228,7 @@ body {
 
 .tarot-card.flipped .card-inner {
   transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
 }
 
 .card-face {
@@ -246,6 +247,8 @@ body {
   background: radial-gradient(circle, rgba(214, 182, 112, 0.2), transparent 60%),
     linear-gradient(160deg, rgba(20, 24, 50, 0.95), rgba(8, 10, 22, 0.95));
   border: 1px solid rgba(214, 182, 112, 0.35);
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 
 .card-back-image {
@@ -284,8 +287,8 @@ body {
 }
 
 .card-front {
-  transform: rotateY(180deg) translateZ(1px);
-  -webkit-transform: rotateY(180deg) translateZ(1px);
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
   background: var(--card-bg);
   border: 1px solid rgba(255, 255, 255, 0.08);
   display: grid;
