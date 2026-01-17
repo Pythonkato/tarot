@@ -26,6 +26,84 @@ const elements = {
 
 const HISTORY_KEY = "past-life-tarot-history";
 
+const pastLifeEras = [
+  {
+    name: "明治時代",
+    description: "文明開化の空気の中で、新しい知識と規律が混ざり合う時代。",
+    jobs: ["新聞記者", "女学校の教師", "鉄道技師", "薬種商"]
+  },
+  {
+    name: "大正時代",
+    description: "自由な文化と職人技が交差し、人の交流が華やいだ時代。",
+    jobs: ["出版社の編集者", "洋裁職人", "活動写真館の案内係", "洋菓子店の職人"]
+  },
+  {
+    name: "昭和時代",
+    description: "復興と成長の渦中で、人を支える仕事が重みを持った時代。",
+    jobs: ["町工場の技師", "診療所の看護師", "ラジオ局の技術員", "市場の仲買人"]
+  },
+  {
+    name: "江戸時代",
+    description: "町人文化が花開き、人と人のつながりが暮らしを支えた時代。",
+    jobs: ["商家の番頭", "浮世絵師", "寺子屋の師匠", "両替商"]
+  },
+  {
+    name: "戦国時代",
+    description: "緊張と変化が続く中で、機転と胆力が試された時代。",
+    jobs: ["城の兵法指南役", "密偵", "鍛冶職人", "馬番"]
+  },
+  {
+    name: "室町時代",
+    description: "武家と文化が交わり、芸能や儀式が重視された時代。",
+    jobs: ["能楽師", "寺院の書記", "茶の湯の世話役", "鎧職人"]
+  },
+  {
+    name: "鎌倉時代",
+    description: "武士の気骨と信仰が日常に深く根づいた時代。",
+    jobs: ["御家人の家臣", "行商人", "山寺の修行僧", "船頭"]
+  },
+  {
+    name: "平安時代",
+    description: "雅やかな文化の裏で、慎重な礼節が求められた時代。",
+    jobs: ["宮廷の女房", "陰陽師の助手", "書写の達人", "香の調合師"]
+  },
+  {
+    name: "奈良時代",
+    description: "都が整い、仏教文化が暮らしに影響を与えた時代。",
+    jobs: ["寺院の写経師", "都の役人", "仏具の職人", "旅の薬師"]
+  },
+  {
+    name: "飛鳥時代",
+    description: "国づくりの胎動期で、技術や知識が重宝された時代。",
+    jobs: ["木簡の記録係", "工房の職人", "渡来人の通訳", "神殿の祭司"]
+  },
+  {
+    name: "古墳時代",
+    description: "豪族の権威が支配し、共同体の結束が要となった時代。",
+    jobs: ["古墳の造営監督", "部族の長の補佐", "弓の名手", "土器職人"]
+  },
+  {
+    name: "弥生時代",
+    description: "稲作が暮らしの中心となり、村の協力が尊ばれた時代。",
+    jobs: ["稲作の指導役", "倉庫の管理人", "青銅器の鋳造者", "祭礼の踊り手"]
+  },
+  {
+    name: "縄文時代",
+    description: "自然と共に生き、感覚と直感が研ぎ澄まされた時代。",
+    jobs: ["狩猟のリーダー", "貝塚の管理人", "土器の装飾師", "薬草の採集者"]
+  }
+];
+
+const pastLifeGenders = ["女性", "男性"];
+
+const buildPastLifeProfile = (seed, roleCard) => {
+  const rand = getSeededRandom(`${seed}-${roleCard.id}-profile`);
+  const era = pastLifeEras[Math.floor(rand() * pastLifeEras.length)];
+  const job = era.jobs[Math.floor(rand() * era.jobs.length)];
+  const gender = pastLifeGenders[Math.floor(rand() * pastLifeGenders.length)];
+  return { era: era.name, job, gender, description: era.description };
+};
+
 const xmur3 = (str) => {
   let h = 1779033703 ^ str.length;
   for (let i = 0; i < str.length; i += 1) {
@@ -156,7 +234,8 @@ const renderHistory = () => {
 const buildStory = (drawn) => {
   const [role, environment, gift, pattern, key] = drawn;
   const name = state.name ? `${state.name}さん` : "あなた";
-  return `${name}の前世は、「${role.card.name}」のように${role.text.scene} ${environment.text.scene} そこでは${gift.text.scene}ことが大きな光となり、今世には${gift.text.influence}として残っています。\n\nしかし${pattern.text.scene}という影が重なり、今世でも${pattern.text.influence}が現れやすいようです。だからこそ、今世の鍵は「${key.card.name}」が示すように${key.text.scene}。${key.text.influence}と信じて、${key.text.actions[0]}から始めてみてください。\n\n過去はあなたを縛るためではなく、あなたの味方としてそっと寄り添うもの。今は小さな選択の積み重ねで、未来の景色が変わっていきます。`;
+  const profile = buildPastLifeProfile(state.seed, role.card);
+  return `${name}の前世は${profile.era}の${profile.gender}で、${profile.job}として生きていました。${profile.description}\n\n「${role.card.name}」が示すように${role.text.scene} ${environment.text.scene} そこでは${gift.text.scene}ことが大きな光となり、今世には${gift.text.influence}として残っています。\n\n各カードが伝える今に残る影響は次の通りです。\n・${positions[0].label}「${role.card.name}」: ${role.text.influence}\n・${positions[1].label}「${environment.card.name}」: ${environment.text.influence}\n・${positions[2].label}「${gift.card.name}」: ${gift.text.influence}\n・${positions[3].label}「${pattern.card.name}」: ${pattern.text.influence}\n・${positions[4].label}「${key.card.name}」: ${key.text.influence}\n\nしかし${pattern.text.scene}という影が重なり、今世でも${pattern.text.influence}が現れやすいようです。だからこそ、今世の鍵は「${key.card.name}」が示すように${key.text.scene}。${key.text.influence}と信じて、${key.text.actions[0]}から始めてみてください。\n\n過去はあなたを縛るためではなく、あなたの味方としてそっと寄り添うもの。今は小さな選択の積み重ねで、未来の景色が変わっていきます。`;
 };
 
 const createCardElement = (item, position) => {
