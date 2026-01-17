@@ -222,6 +222,7 @@ body {
   height: 100%;
   transition: transform 0.8s ease;
   transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
 }
 
 .tarot-card.flipped .card-inner {
@@ -232,6 +233,9 @@ body {
   position: absolute;
   inset: 0;
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
   border-radius: 20px;
   overflow: hidden;
   box-shadow: var(--shadow);
